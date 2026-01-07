@@ -32,6 +32,13 @@ app.use((req, res, next) => {
     next();
 });
 
+// Stub user thumbnails locally to avoid external calls
+const PLACEHOLDER_THUMB = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wIAAgMBAp6nzgAAAABJRU5ErkJggg==', 'base64');
+app.get('/api/users/:id/thumbnail', (req, res) => {
+    res.setHeader('Content-Type', 'image/png');
+    res.send(PLACEHOLDER_THUMB);
+});
+
 // Serve static files from dist directory
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.static(path.join(__dirname, 'static')));

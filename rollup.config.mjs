@@ -112,7 +112,15 @@ const PAGE_TARGETS = [
             format: 'umd',
             sourcemap
         },
-        plugins: plugins()
+        plugins: plugins().concat([
+            copy({
+                targets: [
+                    { src: 'node_modules/playcanvas/build/playcanvas.js', dest: 'dist/js/vendor' },
+                    { src: 'node_modules/playcanvas/build/playcanvas.d.ts', dest: 'dist/js/vendor' }
+                ],
+                hook: 'writeBundle'
+            })
+        ])
     },
     {
         input: 'src/editor/blank.ts',

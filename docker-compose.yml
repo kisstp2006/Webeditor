@@ -6,3 +6,22 @@ services:
       - .env
     volumes:
       - ./test-results:/usr/src/test/test-results
+
+  # Local development server
+  playcanvas-editor-dev:
+    build: .
+    container_name: playcanvas-editor-dev
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=development
+      - PORT=3487
+    ports:
+      - "3487:3487"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/dist
+    command: npm run dev:watch
+    profiles:
+      - dev

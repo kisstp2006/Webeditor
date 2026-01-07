@@ -1,3 +1,6 @@
+// local backend override (must be first so it can tweak config before Editor boot)
+import '@/local/local-backend-override';
+
 // extensions
 import '@/common/extensions';
 

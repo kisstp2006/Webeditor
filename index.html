@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayCanvas Editor - Local Development</title>
+    <meta name="description" content="Local Development Server for PlayCanvas Editor">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/editor.css">
+    <link rel="stylesheet" href="css/code-editor.css">
+    <link rel="stylesheet" href="css/error.css">
+    <link rel="stylesheet" href="css/launch.css">
+</head>
+<body>
+    <div id="root"></div>
+    <div id="notify-root"></div>
+    
+    <!-- Scripts -->
+    <script>
+        // Initialize global config object before editor loads
+        // This is normally provided by the PlayCanvas backend
+        window.config = {
+            // User and auth info
+            self: {
+                id: 0,
+                username: 'local_user',
+                email: 'user@localhost',
+                role: 'admin',
+                branch: {
+                    id: 0,
+                    name: 'main',
+                    merge: null
+                }
+            },
+            // Project info
+            project: {
+                id: 12345,
+                name: 'Local Project'
+            },
+            // Scene info
+            scene: {
+                id: 54321,
+                name: 'Scene'
+            },
+            // API schema - defines structure of data
+            schema: {
+                scene: {
+                    entities: {
+                        // Entity schema
+                    },
+                    settings: {
+                        // Scene settings schema
+                    }
+                },
+                asset: {
+                    // Asset schema
+                },
+                component: {
+                    // Component schemas
+                }
+            },
+            // API URLs
+            url: {
+                api: 'https://api.playcanvas.com',
+                home: 'https://playcanvas.com'
+            },
+            // Access token for API calls
+            accessToken: 'development-token',
+            // Realtime/WebSocket URL
+            realtimeUrl: 'wss://realtime.playcanvas.com'
+        };
+
+        // Configuration for local development
+        // Get environment variables from server (injected during page load)
+        const serverConfig = window.__SERVER_CONFIG__ || {};
+        window.EDITOR_CONFIG = {
+            apiUrl: serverConfig.apiUrl || 'https://api.playcanvas.com',
+            realtimeUrl: serverConfig.realtimeUrl || 'wss://realtime.playcanvas.com',
+            uploadUrl: serverConfig.uploadUrl || 'https://upload.playcanvas.com',
+            environment: 'development',
+            useLocalFrontend: true
+        };
+    </script>
+
+    <!-- Load UMD scripts -->
+    <script src="js/editor.js"></script>
+
+    <!-- HMR for development (Vite) -->
+    <script type="module">
+        if (import.meta.hot) {
+            import.meta.hot.accept(() => {
+                window.location.reload();
+            });
+        }
+    </script>
+</body>
+</html>
